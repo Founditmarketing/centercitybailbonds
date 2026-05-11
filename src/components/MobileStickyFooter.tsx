@@ -1,21 +1,50 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll } from 'motion/react';
-import { Phone, Mail, X } from 'lucide-react';
+import { Phone, Mail, X, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+
+type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export default function MobileStickyFooter() {
   const [isOpen, setIsOpen] = useState(false);
   const [showFooter, setShowFooter] = useState(false);
   const { scrollY } = useScroll();
 
+  const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', message: '' });
+  const [status, setStatus] = useState<FormStatus>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
   useEffect(() => {
     return scrollY.on("change", (latest) => {
-      if (latest > window.innerHeight * 0.8) {
-        setShowFooter(true);
-      } else {
-        setShowFooter(false);
-      }
+      setShowFooter(latest > window.innerHeight * 0.8);
     });
   }, [scrollY]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('loading');
+    setErrorMsg('');
+    try {
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to send message.');
+      setStatus('success');
+      setFormData({ name: '', phone: '', email: '', service: '', message: '' });
+    } catch (err: unknown) {
+      setStatus('error');
+      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    }
+  };
+
+  const inputClass = 'peer w-full bg-white/5 border border-white/10 rounded-sm p-3 pt-5 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300';
+  const labelClass = 'absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none';
 
   return (
     <>
@@ -42,7 +71,7 @@ export default function MobileStickyFooter() {
               <div className="absolute bottom-1 right-1 w-1.5 h-1.5 border-b-2 border-r-2 border-white/40 group-hover:border-black/40 z-10 transition-colors duration-500 pointer-events-none group-hover:scale-125"></div>
             </a>
             <button 
-              onClick={() => setIsOpen(true)}
+              onClick={() => { setIsOpen(true); setStatus('idle'); }}
               className="relative overflow-hidden group flex-1 flex items-center justify-center gap-2 bg-gold-500 text-black font-black uppercase tracking-widest text-[10px] py-4 shadow-[0_0_15px_rgba(212,175,55,0.3)] transition-all"
             >
               <div className="absolute inset-0 w-full h-full bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-0"></div>
@@ -89,85 +118,99 @@ export default function MobileStickyFooter() {
               </div>
 
               <div className="p-4 overflow-y-auto flex-grow">
-                <form className="flex flex-col gap-2" onSubmit={(e) => e.preventDefault()}>
-                  <div className="relative group">
-                    <input 
-                      type="text" 
-                      id="mobileFullName"
-                      className="peer w-full bg-white/5 border border-white/10 rounded-sm p-3 pt-5 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300" 
-                      placeholder="John Doe" 
-                    />
-                    <label 
-                      htmlFor="mobileFullName" 
-                      className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none"
+                <AnimatePresence mode="wait">
+                  {status === 'success' ? (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex flex-col items-center justify-center gap-4 py-12 text-center"
                     >
-                      Full Name
-                    </label>
-                  </div>
-
-
-
-                  <div className="relative group">
-                    <input 
-                      type="tel" 
-                      id="mobilePhone"
-                      className="peer w-full bg-white/5 border border-white/10 rounded-sm p-3 pt-5 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300" 
-                      placeholder="(215) 870-8197" 
-                    />
-                    <label 
-                      htmlFor="mobilePhone" 
-                      className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none"
+                      <CheckCircle className="w-14 h-14 text-green-400" />
+                      <h4 className="text-xl font-black text-white uppercase tracking-tight">Message Sent!</h4>
+                      <p className="text-slate-400 text-sm max-w-xs leading-relaxed">We'll be in touch shortly. For urgent matters, call us directly.</p>
+                      <button onClick={() => setStatus('idle')} className="text-gold-500 text-xs uppercase tracking-widest font-bold border-b border-gold-500/40 hover:border-gold-500 transition-colors mt-2">
+                        Send Another
+                      </button>
+                    </motion.div>
+                  ) : (
+                    <motion.form
+                      key="form"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex flex-col gap-2"
+                      onSubmit={handleSubmit}
                     >
-                      Phone Number
-                    </label>
-                  </div>
+                      {/* Full Name */}
+                      <div className="relative group">
+                        <input type="text" id="mobileFullName" name="name" value={formData.name} onChange={handleChange} required className={inputClass} placeholder="John Doe" />
+                        <label htmlFor="mobileFullName" className={labelClass}>Full Name</label>
+                      </div>
 
-                  <div className="relative group">
-                    <label htmlFor="mobileService" className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest pointer-events-none z-10">
-                      Services Needed
-                    </label>
-                    <select 
-                      id="mobileService"
-                      defaultValue=""
-                      className="w-full bg-white/5 border border-white/10 rounded-sm p-3 pt-5 text-white focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300 appearance-none cursor-pointer"
-                    >
-                      <option value="" disabled className="bg-dark-950">Select a Service</option>
-                      <option value="drug" className="bg-dark-950">Drug Charge Bailbonds</option>
-                      <option value="dui" className="bg-dark-950">DUI / DWI Bailbonds</option>
-                      <option value="felony" className="bg-dark-950">Felony Charges Bailbonds</option>
-                      <option value="probation" className="bg-dark-950">Probation/Parole Violations</option>
-                      <option value="theft" className="bg-dark-950">Theft Charges Bailbonds</option>
-                      <option value="violent" className="bg-dark-950">Violent Crimes Bailbonds</option>
-                      <option value="sex" className="bg-dark-950">Sex Crimes Bailbonds</option>
-                      <option value="domestic" className="bg-dark-950">Domestic Violence Bailbonds</option>
-                      <option value="white_collar" className="bg-dark-950">White Collar Crimes Bailbonds</option>
-                    </select>
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gold-500">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </div>
-                  </div>
+                      {/* Phone */}
+                      <div className="relative group">
+                        <input type="tel" id="mobilePhone" name="phone" value={formData.phone} onChange={handleChange} className={inputClass} placeholder="(215) 870-8197" />
+                        <label htmlFor="mobilePhone" className={labelClass}>Phone Number</label>
+                      </div>
 
-                  <div className="relative group flex-grow flex flex-col min-h-[80px]">
-                    <textarea 
-                      id="mobileMessage"
-                      className="peer w-full h-full min-h-[60px] bg-white/5 border border-white/10 rounded-sm p-3 pt-5 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300 resize-none" 
-                      placeholder="Message"
-                    ></textarea>
-                    <label 
-                      htmlFor="mobileMessage" 
-                      className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none"
-                    >
-                      Message
-                    </label>
-                  </div>
+                      {/* Email */}
+                      <div className="relative group">
+                        <input type="email" id="mobileEmail" name="email" value={formData.email} onChange={handleChange} required className={inputClass} placeholder="you@example.com" />
+                        <label htmlFor="mobileEmail" className={labelClass}>Email Address</label>
+                      </div>
 
-                  <button className="relative overflow-hidden group bg-gold-500 text-black p-4 font-black uppercase tracking-widest text-sm transition-all duration-300 mt-4 w-full flex-shrink-0">
-                    <div className="absolute inset-0 w-full h-full bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-0"></div>
-                    <span className="relative z-10 group-hover:text-black transition-colors duration-500">Request Bail Now</span>
-                    <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
-                    <div className="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
-                  </button>
-                </form>
+                      {/* Service */}
+                      <div className="relative group">
+                        <label htmlFor="mobileService" className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest pointer-events-none z-10">Services Needed</label>
+                        <select id="mobileService" name="service" value={formData.service} onChange={handleChange} defaultValue="" className="w-full bg-white/5 border border-white/10 rounded-sm p-3 pt-5 text-white focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300 appearance-none cursor-pointer">
+                          <option value="" disabled className="bg-dark-950">Select a Service</option>
+                          <option value="drug" className="bg-dark-950">Drug Charge Bailbonds</option>
+                          <option value="dui" className="bg-dark-950">DUI / DWI Bailbonds</option>
+                          <option value="felony" className="bg-dark-950">Felony Charges Bailbonds</option>
+                          <option value="probation" className="bg-dark-950">Probation/Parole Violations</option>
+                          <option value="theft" className="bg-dark-950">Theft Charges Bailbonds</option>
+                          <option value="violent" className="bg-dark-950">Violent Crimes Bailbonds</option>
+                          <option value="sex" className="bg-dark-950">Sex Crimes Bailbonds</option>
+                          <option value="domestic" className="bg-dark-950">Domestic Violence Bailbonds</option>
+                          <option value="white_collar" className="bg-dark-950">White Collar Crimes Bailbonds</option>
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gold-500">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                      </div>
+
+                      {/* Message */}
+                      <div className="relative group flex-grow flex flex-col min-h-[80px]">
+                        <textarea id="mobileMessage" name="message" value={formData.message} onChange={handleChange} required className="peer w-full h-full min-h-[60px] bg-white/5 border border-white/10 rounded-sm p-3 pt-5 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300 resize-none" placeholder="Message"></textarea>
+                        <label htmlFor="mobileMessage" className={labelClass}>Message</label>
+                      </div>
+
+                      {/* Error */}
+                      <AnimatePresence>
+                        {status === 'error' && (
+                          <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-2 rounded-sm">
+                            <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                            <p className="text-red-400 text-xs">{errorMsg}</p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      {/* Submit */}
+                      <button type="submit" disabled={status === 'loading'} className="relative overflow-hidden group bg-gold-500 text-black p-4 font-black uppercase tracking-widest text-sm transition-all duration-300 mt-4 w-full flex-shrink-0 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                        <div className="absolute inset-0 w-full h-full bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-0"></div>
+                        {status === 'loading' ? (
+                          <><Loader2 className="w-4 h-4 relative z-10 animate-spin" /><span className="relative z-10">Sending…</span></>
+                        ) : (
+                          <span className="relative z-10 group-hover:text-black transition-colors duration-500">Request Bail Now</span>
+                        )}
+                        <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
+                        <div className="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
+                      </button>
+                    </motion.form>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           </>

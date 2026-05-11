@@ -9,7 +9,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, phone, email, message } = req.body;
+  const { name, phone, email, service, message } = req.body;
 
   // Basic validation
   if (!name || !email || !message) {
@@ -49,6 +49,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 <div style="margin-bottom: 24px;">
                   <p style="color: #d4af37; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: bold; margin: 0 0 6px 0;">Phone Number</p>
                   <p style="color: #ffffff; font-size: 18px; font-weight: 700; margin: 0;">${phone || 'Not provided'}</p>
+                </div>
+
+                <div style="margin-bottom: 24px;">
+                  <p style="color: #d4af37; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: bold; margin: 0 0 6px 0;">Service Needed</p>
+                  <p style="color: #ffffff; font-size: 18px; font-weight: 700; margin: 0;">${service || 'Not specified'}</p>
                 </div>
 
                 <div style="margin-bottom: 24px;">

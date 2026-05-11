@@ -1,10 +1,15 @@
-import { useEffect, useRef } from 'react';
-import { motion } from 'motion/react';
-import { ArrowDown } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ArrowDown, ArrowRight, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', message: '' });
+  const [status, setStatus] = useState<FormStatus>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     if (videoRef.current) {
@@ -13,9 +18,37 @@ export default function Hero() {
       videoRef.current.play().catch(error => console.log("Autoplay prevented:", error));
     }
   }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('loading');
+    setErrorMsg('');
+    try {
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, name: formData.name }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to send message.');
+      setStatus('success');
+      setFormData({ name: '', phone: '', email: '', service: '', message: '' });
+    } catch (err: unknown) {
+      setStatus('error');
+      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    }
+  };
+
+  const inputClass = 'peer w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300';
+  const labelClass = 'absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none';
+
   return (
     <section className="relative min-h-[90vh] flex flex-col justify-center pt-24 pb-16 overflow-hidden">
-      {/* Background Video layer (Forced autoplay via ref) */}
+      {/* Background Video layer */}
       <div className="absolute inset-0 z-[-1]">
         <video 
           ref={videoRef}
@@ -27,7 +60,6 @@ export default function Hero() {
         >
           <source src="/handcuffsvideo.mp4" type="video/mp4" />
         </video>
-        {/* Overlay gradients for seamless blending */}
         <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/40 md:via-dark-950/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-dark-950/30 md:from-dark-950/70 via-transparent to-dark-950/30 md:to-dark-950/70" />
       </div>
@@ -48,8 +80,8 @@ export default function Hero() {
             <span className="whitespace-normal md:whitespace-nowrap">Service <br className="block md:hidden" />in <span className="text-gold-500">Philly</span></span>
           </h1>
           <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed mb-8">
-            <strong className="text-white font-bold">Jail’s No Place to Stay — Center City Posts Bail Today.</strong><br className="hidden sm:block" />
-            <span className="mt-2 inline-block">Locally Philadelphia Owned & Operated. Immediate, 24/7 confidential bail services.</span><br />
+            <strong className="text-white font-bold">Jail's No Place to Stay — Center City Posts Bail Today.</strong><br className="hidden sm:block" />
+            <span className="mt-2 inline-block">Locally Philadelphia Owned &amp; Operated. Immediate, 24/7 confidential bail services.</span><br />
             <span className="mt-4 inline-block text-white font-black text-xl lg:text-2xl tracking-widest border-l-4 border-gold-500 pl-4 pr-6 py-2 bg-dark-950/50">
               1238 South Street, Philadelphia, PA 19147
             </span>
@@ -72,7 +104,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Contact Form */}
+      {/* Contact Form — Desktop Sidebar */}
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -81,88 +113,103 @@ export default function Hero() {
       >
         <h3 className="text-2xl font-black uppercase tracking-tighter text-white mb-2">Get Help Fast</h3>
         <p className="text-[10px] text-slate-400 mb-2 uppercase tracking-widest">Confidential • 24/7 Response</p>
-        
-        <form className="flex flex-col gap-3 flex-grow mt-2" onSubmit={(e) => e.preventDefault()}>
-          <div className="relative group">
-            <input 
-              type="text" 
-              id="fullName"
-              className="peer w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300" 
-              placeholder="John Doe" 
-            />
-            <label 
-              htmlFor="fullName" 
-              className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none"
+
+        <AnimatePresence mode="wait">
+          {status === 'success' ? (
+            <motion.div
+              key="success"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex flex-col items-center justify-center gap-4 flex-grow text-center"
             >
-              Full Name
-            </label>
-          </div>
-
-
-
-          <div className="relative group">
-            <input 
-              type="tel" 
-              id="phone"
-              className="peer w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300" 
-              placeholder="(215) 870-8197" 
-            />
-            <label 
-              htmlFor="phone" 
-              className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none"
+              <CheckCircle className="w-14 h-14 text-green-400" />
+              <h4 className="text-xl font-black text-white uppercase tracking-tight">Message Sent!</h4>
+              <p className="text-slate-400 text-xs leading-relaxed">We'll be in touch shortly. For urgent matters, call us directly.</p>
+              <button onClick={() => setStatus('idle')} className="text-gold-500 text-xs uppercase tracking-widest font-bold border-b border-gold-500/40 hover:border-gold-500 transition-colors mt-2">
+                Send Another
+              </button>
+            </motion.div>
+          ) : (
+            <motion.form
+              key="form"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex flex-col gap-3 flex-grow mt-2"
+              onSubmit={handleSubmit}
             >
-              Phone Number
-            </label>
-          </div>
+              {/* Full Name */}
+              <div className="relative group">
+                <input type="text" id="heroFullName" name="name" value={formData.name} onChange={handleChange} required className={inputClass} placeholder="John Doe" />
+                <label htmlFor="heroFullName" className={labelClass}>Full Name</label>
+              </div>
 
-          <div className="relative group">
-            <label htmlFor="service" className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest pointer-events-none z-10">
-              Services Needed
-            </label>
-            <select 
-              id="service"
-              className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-sm p-4 pt-7 text-white focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300 appearance-none cursor-pointer"
-            >
-              <option value="" disabled selected className="bg-dark-950">Select a Service</option>
-              <option value="drug" className="bg-dark-950">Drug Charge Bailbonds</option>
-              <option value="dui" className="bg-dark-950">DUI / DWI Bailbonds</option>
-              <option value="felony" className="bg-dark-950">Felony Charges Bailbonds</option>
-              <option value="probation" className="bg-dark-950">Probation/Parole Violations</option>
-              <option value="theft" className="bg-dark-950">Theft Charges Bailbonds</option>
-              <option value="violent" className="bg-dark-950">Violent Crimes Bailbonds</option>
-              <option value="sex" className="bg-dark-950">Sex Crimes Bailbonds</option>
-              <option value="domestic" className="bg-dark-950">Domestic Violence Bailbonds</option>
-              <option value="white_collar" className="bg-dark-950">White Collar Crimes Bailbonds</option>
-            </select>
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gold-500">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-            </div>
-          </div>
+              {/* Phone */}
+              <div className="relative group">
+                <input type="tel" id="heroPhone" name="phone" value={formData.phone} onChange={handleChange} className={inputClass} placeholder="(215) 870-8197" />
+                <label htmlFor="heroPhone" className={labelClass}>Phone Number</label>
+              </div>
 
-          <div className="relative group flex-grow flex flex-col">
-            <textarea 
-              id="message"
-              className="peer w-full h-full min-h-[80px] bg-white/5 backdrop-blur-md border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300 resize-none" 
-              placeholder="Message"
-            ></textarea>
-            <label 
-              htmlFor="message" 
-              className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none"
-            >
-              Message
-            </label>
-          </div>
+              {/* Email */}
+              <div className="relative group">
+                <input type="email" id="heroEmail" name="email" value={formData.email} onChange={handleChange} required className={inputClass} placeholder="you@example.com" />
+                <label htmlFor="heroEmail" className={labelClass}>Email Address</label>
+              </div>
 
-          <button className="relative overflow-hidden group bg-gold-500 text-black p-4 font-black uppercase tracking-widest text-sm transition-all duration-300 mt-2 w-full">
-            <div className="absolute inset-0 w-full h-full bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-0"></div>
-            <span className="relative z-10 group-hover:text-black transition-colors duration-500">Request Bail Now</span>
-            <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
-            <div className="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
-          </button>
-        </form>
+              {/* Service */}
+              <div className="relative group">
+                <label htmlFor="heroService" className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest pointer-events-none z-10">Services Needed</label>
+                <select id="heroService" name="service" value={formData.service} onChange={handleChange} className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-sm p-4 pt-7 text-white focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300 appearance-none cursor-pointer">
+                  <option value="" disabled className="bg-dark-950">Select a Service</option>
+                  <option value="drug" className="bg-dark-950">Drug Charge Bailbonds</option>
+                  <option value="dui" className="bg-dark-950">DUI / DWI Bailbonds</option>
+                  <option value="felony" className="bg-dark-950">Felony Charges Bailbonds</option>
+                  <option value="probation" className="bg-dark-950">Probation/Parole Violations</option>
+                  <option value="theft" className="bg-dark-950">Theft Charges Bailbonds</option>
+                  <option value="violent" className="bg-dark-950">Violent Crimes Bailbonds</option>
+                  <option value="sex" className="bg-dark-950">Sex Crimes Bailbonds</option>
+                  <option value="domestic" className="bg-dark-950">Domestic Violence Bailbonds</option>
+                  <option value="white_collar" className="bg-dark-950">White Collar Crimes Bailbonds</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gold-500">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+              </div>
+
+              {/* Message */}
+              <div className="relative group flex-grow flex flex-col">
+                <textarea id="heroMessage" name="message" value={formData.message} onChange={handleChange} required className="peer w-full h-full min-h-[80px] bg-white/5 backdrop-blur-md border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300 resize-none" placeholder="Message"></textarea>
+                <label htmlFor="heroMessage" className={labelClass}>Message</label>
+              </div>
+
+              {/* Error */}
+              <AnimatePresence>
+                {status === 'error' && (
+                  <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-2 rounded-sm">
+                    <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                    <p className="text-red-400 text-xs">{errorMsg}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Submit */}
+              <button type="submit" disabled={status === 'loading'} className="relative overflow-hidden group bg-gold-500 text-black p-4 font-black uppercase tracking-widest text-sm transition-all duration-300 mt-2 w-full flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                <div className="absolute inset-0 w-full h-full bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-0"></div>
+                {status === 'loading' ? (
+                  <><Loader2 className="w-4 h-4 relative z-10 animate-spin" /><span className="relative z-10">Sending…</span></>
+                ) : (
+                  <><span className="relative z-10 group-hover:text-black transition-colors duration-500">Request Bail Now</span><ArrowRight className="w-4 h-4 relative z-10" /></>
+                )}
+                <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
+                <div className="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
+              </button>
+            </motion.form>
+          )}
+        </AnimatePresence>
       </motion.div>
 
-      {/* Sleek Scroll indicator */}
+      {/* Scroll indicator */}
       <div 
         className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-4 cursor-pointer group"
         onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
