@@ -1,7 +1,61 @@
-import { motion } from 'motion/react';
-import { Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Phone, MapPin, ArrowRight, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+
+type FormStatus = 'idle' | 'loading' | 'success' | 'error';
+
+interface FormData {
+  name: string;
+  phone: string;
+  email: string;
+  message: string;
+}
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    phone: '',
+    email: '',
+    message: '',
+  });
+  const [status, setStatus] = useState<FormStatus>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('loading');
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send message.');
+      }
+
+      setStatus('success');
+      setFormData({ name: '', phone: '', email: '', message: '' });
+    } catch (err: unknown) {
+      setStatus('error');
+      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    }
+  };
+
+  const inputClass =
+    'peer w-full bg-dark-950 border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-dark-950 focus:outline-none transition-all duration-300';
+  const labelClass =
+    'absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none';
+
   return (
     <main className="relative z-10 flex flex-col min-h-screen pt-32 pb-24 px-4 bg-dark-950">
       <div className="max-w-7xl mx-auto w-full">
@@ -44,8 +98,6 @@ export default function ContactPage() {
                 </a>
               </div>
             </motion.div>
-
-
 
             <motion.div 
               initial={{ opacity: 0, x: -30 }}
@@ -100,63 +152,135 @@ export default function ContactPage() {
             
             <h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-8 relative z-10">Send a Secure Message</h3>
             
-            <form className="flex flex-col gap-6 relative z-10" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="relative group">
-                  <input 
-                    type="text" 
-                    id="contactName"
-                    className="peer w-full bg-dark-950 border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-dark-950 focus:outline-none transition-all duration-300" 
-                    placeholder="John Doe" 
-                  />
-                  <label 
-                    htmlFor="contactName" 
-                    className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none"
-                  >
-                    Full Name
-                  </label>
-                </div>
-
-                <div className="relative group">
-                  <input 
-                    type="tel" 
-                    id="contactPhone"
-                    className="peer w-full bg-dark-950 border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-dark-950 focus:outline-none transition-all duration-300" 
-                    placeholder="(215) 870-8197" 
-                  />
-                  <label 
-                    htmlFor="contactPhone" 
-                    className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none"
-                  >
-                    Phone Number
-                  </label>
-                </div>
-              </div>
-
-
-
-              <div className="relative group">
-                <textarea 
-                  id="contactMessage"
-                  className="peer w-full min-h-[150px] bg-dark-950 border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-dark-950 focus:outline-none transition-all duration-300 resize-none" 
-                  placeholder="How can we help?"
-                ></textarea>
-                <label 
-                  htmlFor="contactMessage" 
-                  className="absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none"
+            <AnimatePresence mode="wait">
+              {status === 'success' ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col items-center justify-center gap-4 py-16 text-center relative z-10"
                 >
-                  Message
-                </label>
-              </div>
+                  <CheckCircle className="w-16 h-16 text-green-400" />
+                  <h4 className="text-2xl font-black text-white uppercase tracking-tight">Message Sent!</h4>
+                  <p className="text-slate-400 text-sm max-w-xs leading-relaxed">
+                    We've received your message and will be in touch shortly. For urgent matters, please call us directly.
+                  </p>
+                  <button
+                    onClick={() => setStatus('idle')}
+                    className="mt-4 text-gold-500 text-xs uppercase tracking-widest font-bold border-b border-gold-500/40 hover:border-gold-500 transition-colors"
+                  >
+                    Send Another Message
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col gap-6 relative z-10"
+                  onSubmit={handleSubmit}
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Full Name */}
+                    <div className="relative group">
+                      <input 
+                        type="text" 
+                        id="contactName"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className={inputClass}
+                        placeholder="John Doe" 
+                      />
+                      <label htmlFor="contactName" className={labelClass}>Full Name</label>
+                    </div>
 
-              <button className="relative overflow-hidden group bg-gold-500 text-black p-5 font-black uppercase tracking-widest text-sm transition-all duration-300 mt-2 flex items-center justify-center gap-3 w-full lg:w-max ml-auto">
-                <div className="absolute inset-0 w-full h-full bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-0"></div>
-                <span className="relative z-10 group-hover:text-black transition-colors duration-500">Send Secure Message</span>
-                <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
-                <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
-                <div className="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
-              </button>
-            </form>
+                    {/* Phone */}
+                    <div className="relative group">
+                      <input 
+                        type="tel" 
+                        id="contactPhone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className={inputClass}
+                        placeholder="(215) 870-8197" 
+                      />
+                      <label htmlFor="contactPhone" className={labelClass}>Phone Number</label>
+                    </div>
+                  </div>
+
+                  {/* Email */}
+                  <div className="relative group">
+                    <input 
+                      type="email" 
+                      id="contactEmail"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className={inputClass}
+                      placeholder="you@example.com" 
+                    />
+                    <label htmlFor="contactEmail" className={labelClass}>Email Address</label>
+                  </div>
+
+                  {/* Message */}
+                  <div className="relative group">
+                    <textarea 
+                      id="contactMessage"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      className="peer w-full min-h-[150px] bg-dark-950 border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-dark-950 focus:outline-none transition-all duration-300 resize-none" 
+                      placeholder="How can we help?"
+                    ></textarea>
+                    <label htmlFor="contactMessage" className={labelClass}>Message</label>
+                  </div>
+
+                  {/* Error Banner */}
+                  <AnimatePresence>
+                    {status === 'error' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="flex items-center gap-3 bg-red-500/10 border border-red-500/30 px-4 py-3 rounded-sm"
+                      >
+                        <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                        <p className="text-red-400 text-sm">{errorMsg}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    disabled={status === 'loading'}
+                    className="relative overflow-hidden group bg-gold-500 text-black p-5 font-black uppercase tracking-widest text-sm transition-all duration-300 mt-2 flex items-center justify-center gap-3 w-full lg:w-max ml-auto disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    <div className="absolute inset-0 w-full h-full bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-0"></div>
+                    {status === 'loading' ? (
+                      <>
+                        <Loader2 className="w-4 h-4 relative z-10 animate-spin" />
+                        <span className="relative z-10">Sending…</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="relative z-10 group-hover:text-black transition-colors duration-500">Send Secure Message</span>
+                        <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
+                    <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
+                    <div className="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-black/40 z-10 pointer-events-none transition-all duration-500 group-hover:scale-125"></div>
+                  </button>
+                </motion.form>
+              )}
+            </AnimatePresence>
           </motion.div>
         </div>
       </div>

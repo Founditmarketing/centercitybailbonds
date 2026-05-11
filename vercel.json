@@ -1,7 +1,16 @@
 {
+  "functions": {
+    "api/send-email.ts": {
+      "runtime": "@vercel/node"
+    }
+  },
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ]
