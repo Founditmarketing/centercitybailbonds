@@ -48,7 +48,8 @@ export default function Hero() {
             muted 
             autoplay 
             playsinline 
-            class="absolute inset-0 w-full h-full object-cover object-[80%_center] md:object-center opacity-60 md:opacity-40 mix-blend-luminosity scale-105"
+            disablepictureinpicture
+            class="pointer-events-none absolute inset-0 w-full h-full object-cover object-[80%_center] md:object-center opacity-60 md:opacity-40 mix-blend-luminosity scale-105"
           >
             <source src="/handcuffsvideo.mp4" type="video/mp4" />
           </video>

@@ -52,3 +52,14 @@
 .leaflet-tooltip-right.dark-tooltip::before {
   border-right-color: rgba(230, 105, 82, 0.4) !important;
 }
+
+/* Force hide all iOS and mobile video controls and play buttons */
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

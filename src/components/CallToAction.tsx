@@ -13,7 +13,8 @@ export default function CallToAction() {
             muted 
             autoplay 
             playsinline 
-            class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity scale-105"
+            disablepictureinpicture
+            class="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity scale-105"
           >
             <source src="/jailcelldoor.mp4" type="video/mp4" />
           </video>
