@@ -6,18 +6,11 @@ import { Link } from 'react-router-dom';
 type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export default function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', message: '' });
   const [status, setStatus] = useState<FormStatus>('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.defaultMuted = true;
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(error => console.log("Autoplay prevented:", error));
-    }
-  }, []);
+  // Video autoplay is handled via raw HTML injection for mobile reliability
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -45,21 +38,22 @@ export default function Hero() {
 
   const inputClass = 'peer w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300';
   const labelClass = 'absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none';
-
   return (
     <section className="relative min-h-[90vh] flex flex-col justify-center pt-24 pb-16 overflow-hidden">
       {/* Background Video layer */}
       <div className="absolute inset-0 z-[-1]">
-        <video 
-          ref={videoRef}
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover object-[80%_center] md:object-center opacity-60 md:opacity-40 mix-blend-luminosity scale-105"
-        >
-          <source src="/handcuffsvideo.mp4" type="video/mp4" />
-        </video>
+        <div dangerouslySetInnerHTML={{ __html: `
+          <video 
+            loop 
+            muted 
+            autoplay 
+            playsinline 
+            class="absolute inset-0 w-full h-full object-cover object-[80%_center] md:object-center opacity-60 md:opacity-40 mix-blend-luminosity scale-105"
+          >
+            <source src="/handcuffsvideo.mp4" type="video/mp4" />
+          </video>
+        `}} />
+        {/* Overlay gradients for seamless blending */}
         <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/40 md:via-dark-950/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-dark-950/30 md:from-dark-950/70 via-transparent to-dark-950/30 md:to-dark-950/70" />
       </div>

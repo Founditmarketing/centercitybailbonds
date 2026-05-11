@@ -2,29 +2,22 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 
 export default function CallToAction() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.defaultMuted = true;
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(error => console.log("Autoplay prevented:", error));
-    }
-  }, []);
+  // Video autoplay is handled via raw HTML injection for mobile reliability
   return (
     <section className="relative py-32 px-4 overflow-hidden border-t border-b border-gold-500/20 bg-dark-950">
       {/* Background Video (Forced autoplay via ref) */}
       <div className="absolute inset-0 z-0">
-        <video 
-          ref={videoRef}
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity scale-105"
-        >
-          <source src="/jailcelldoor.mp4" type="video/mp4" />
-        </video>
+        <div dangerouslySetInnerHTML={{ __html: `
+          <video 
+            loop 
+            muted 
+            autoplay 
+            playsinline 
+            class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity scale-105"
+          >
+            <source src="/jailcelldoor.mp4" type="video/mp4" />
+          </video>
+        `}} />
         <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-dark-950"></div>
         <div className="absolute inset-0 bg-dark-950/40"></div>
       </div>
