@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold-400: #f08a75;
+  --color-gold-500: #e66952;
+  --color-gold-600: #c9523c;
+  --color-dark-800: #2c2c2c;
+  --color-dark-900: #222222;
+  --color-dark-950: #1c1c1c;
+  --color-black: #1c1c1c;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Anton", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    --gold: #e66952;
+    --dark: #1c1c1c;
+  }
+}
+
+.bg-pattern {
+  background-image: linear-gradient(rgba(230, 105, 82, 0.05) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(230, 105, 82, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Leaflet Dark Map Overrides */
+.leaflet-container {
+  background: #1c1c1c !important;
+  font-family: var(--font-sans) !important;
+}
+.leaflet-tooltip.dark-tooltip {
+  background-color: rgba(28, 28, 28, 0.95) !important;
+  border: 1px solid rgba(230, 105, 82, 0.4) !important;
+  color: white !important;
+  padding: 0 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8) !important;
+  border-radius: 2px !important;
+  backdrop-filter: blur(8px) !important;
+}
+.leaflet-tooltip-top.dark-tooltip::before {
+  border-top-color: rgba(230, 105, 82, 0.4) !important;
+}
+.leaflet-tooltip-bottom.dark-tooltip::before {
+  border-bottom-color: rgba(230, 105, 82, 0.4) !important;
+}
+.leaflet-tooltip-left.dark-tooltip::before {
+  border-left-color: rgba(230, 105, 82, 0.4) !important;
+}
+.leaflet-tooltip-right.dark-tooltip::before {
+  border-right-color: rgba(230, 105, 82, 0.4) !important;
+}
