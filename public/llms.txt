@@ -1,0 +1,27 @@
+# Center City Bailbonds
+
+> An award-winning, ultra-premium, dark-mode web experience for Center City Bailbonds, a boutique financial and legal assistance service in Philadelphia.
+
+## Contact Information
+- **Phone**: (215) 870-8197 (Available 24/7 for immediate response)
+- **Headquarters Address**: 1238 South Street, Philadelphia, PA 19147
+- **Bail Agreement**: Secure online bail agreement forms are available via DocuSign: [DocuSign PowerForm](https://powerforms.docusign.net/07c12434-d9b7-4673-af54-697d1620ae41?acct=f9d9aa56-250c-4c8f-9a7f-ac54ca827d7f&env=na3&accountId=f9d9aa56-250c-4c8f-9a7f-ac54ca827d7f)
+
+## Core Navigation / Pages
+- `/` - Home: Services overview, customer reviews, walk-through information, and instant contact.
+- `/about` - About Us: Information on Center City's 13+ years of experience, licensing details, walk-through warrant services, and support philosophy.
+- `/faq` - FAQ: Answers to common bail bond questions, payment details, collateral requirements, and co-signer obligations.
+- `/contact` - Contact: Complete contact details, maps, and a secure online messaging form.
+
+## Specialized Bailbond Services
+Available at `/services/[id]` where `[id]` matches one of the following:
+
+- **Domestic Violence** (`/services/domestic-violence`): 24/7 bail services for domestic violence-related arrests, highlighting high bond coordination and protective order conditions.
+- **Drug Charges** (`/services/drug-charges`): Bail assistance for simple possession, possession with intent to deliver (PWID), and trafficking, with flexible payment plans.
+- **DUI & DWI** (`/services/dui-dwi`): Support for driving under the influence charges, walking families through court dates and conditions.
+- **Felony** (`/services/felony`): Immediate release coordination for serious felony-level offenses, including walk-through options for open warrants.
+- **Probation & Parole** (`/services/probation-parole`): Bail assistance for probation/parole violation warrants, coordinating pre-set bonds and walk-through booking.
+- **Sex Crimes** (`/services/sex-crimes`): Professional and fully confidential handling of sex offense charges, emphasizing walk-throughs to protect privacy.
+- **Theft** (`/services/theft`): Fast bail release for petty theft, grand theft, burglary, and embezzlement charges.
+- **Violent Crimes** (`/services/violent-crimes`): Specialized high-bond services for assault, battery, and weapons violations.
+- **White Collar** (`/services/white-collar`): Discreet bail bonds for financial fraud, embezzlement, forgery, and public corruption cases.
