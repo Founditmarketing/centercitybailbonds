@@ -38,9 +38,9 @@ export default function CallToAction() {
             Immediate Release is a Call Away
           </div>
           
-          <h3 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter text-white leading-[1.1]">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter text-white leading-[1.1]">
             DO NOT LET YOUR LOVED ONE WAIT. <span className="text-gold-500">CALL CENTER CITY NOW 24/7.</span>
-          </h3>
+          </h2>
 
           <div className="mt-12 flex justify-center w-full max-w-sm">
             <a 

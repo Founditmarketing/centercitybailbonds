@@ -1,27 +1,55 @@
 # Center City Bailbonds
+> Bail bond services, Philadelphia, PA
 
-> An award-winning, ultra-premium, dark-mode web experience for Center City Bailbonds, a boutique financial and legal assistance service in Philadelphia.
+Center City Bailbonds provides 24/7 bail bond services in Philadelphia, Pennsylvania. Licensed and bonded professionals with over 13 years experience offering fast, reliable bail bonds for all types of charges with flexible payment plans and no credit check required.
 
-## Contact Information
-- **Phone**: (215) 870-8197 (Available 24/7 for immediate response)
-- **Headquarters Address**: 1238 South Street, Philadelphia, PA 19147
-- **Bail Agreement**: Secure online bail agreement forms are available via DocuSign: [DocuSign PowerForm](https://powerforms.docusign.net/07c12434-d9b7-4673-af54-697d1620ae41?acct=f9d9aa56-250c-4c8f-9a7f-ac54ca827d7f&env=na3&accountId=f9d9aa56-250c-4c8f-9a7f-ac54ca827d7f)
+## Services
+- Drug Charge Bailbonds
+- DUI/DWI Bailbonds
+- Felony Charges Bailbonds
+- Probation/Parole Violations
+- Theft Charges Bailbonds
+- Violent Crimes Bailbonds
+- Sex Crimes Bailbonds
+- Domestic Violence Bailbonds
+- White Collar Crimes Bailbonds
 
-## Core Navigation / Pages
-- `/` - Home: Services overview, customer reviews, walk-through information, and instant contact.
-- `/about` - About Us: Information on Center City's 13+ years of experience, licensing details, walk-through warrant services, and support philosophy.
-- `/faq` - FAQ: Answers to common bail bond questions, payment details, collateral requirements, and co-signer obligations.
-- `/contact` - Contact: Complete contact details, maps, and a secure online messaging form.
+## Service Area
+Philadelphia, PA and surrounding areas including Chambersburg, Harrisburg, The Poconos, and parts of Maryland and West Virginia.
 
-## Specialized Bailbond Services
-Available at `/services/[id]` where `[id]` matches one of the following:
+## Contact
+- Phone: (215) 870-8197 (24/7)
+- Address: 1238 South Street, Philadelphia, PA 19147
+- Website: https://www.centercitybailbonds.com
+- Bail Agreement: Available via DocuSign online
 
-- **Domestic Violence** (`/services/domestic-violence`): 24/7 bail services for domestic violence-related arrests, highlighting high bond coordination and protective order conditions.
-- **Drug Charges** (`/services/drug-charges`): Bail assistance for simple possession, possession with intent to deliver (PWID), and trafficking, with flexible payment plans.
-- **DUI & DWI** (`/services/dui-dwi`): Support for driving under the influence charges, walking families through court dates and conditions.
-- **Felony** (`/services/felony`): Immediate release coordination for serious felony-level offenses, including walk-through options for open warrants.
-- **Probation & Parole** (`/services/probation-parole`): Bail assistance for probation/parole violation warrants, coordinating pre-set bonds and walk-through booking.
-- **Sex Crimes** (`/services/sex-crimes`): Professional and fully confidential handling of sex offense charges, emphasizing walk-throughs to protect privacy.
-- **Theft** (`/services/theft`): Fast bail release for petty theft, grand theft, burglary, and embezzlement charges.
-- **Violent Crimes** (`/services/violent-crimes`): Specialized high-bond services for assault, battery, and weapons violations.
-- **White Collar** (`/services/white-collar`): Discreet bail bonds for financial fraud, embezzlement, forgery, and public corruption cases.
+## Key Pages
+- Home (/): 24/7 bail bond services overview and contact
+- About (/about): Company info, 13+ years experience, licensing
+- Services (/services/*): Detailed bail bond services by charge type
+- FAQ (/faq): Common bail bond questions answered
+- Contact (/contact): Contact form, map, and location details
+- Privacy (/privacy): Privacy policy
+
+## About
+Center City Bailbonds is a licensed and bonded bail bond service operating 24/7 in Philadelphia. Locally owned and operated with over 13 years of experience. They offer competitive 5% bail bonds, flexible payment plans, no credit check, and walk-through warrant services. Online bail agreements available via DocuSign.
+
+## Frequently Asked Questions
+
+**How much does a bail bond cost?**
+Center City Bailbonds offers competitive 5% bail bonds with flexible payment plans to fit your budget.
+
+**How long does it take to get someone out of jail?**
+Release times vary by facility, but bonds are processed as quickly as possible, often within a few hours.
+
+**Do you offer payment plans?**
+Yes, flexible payment plans with no credit check required. Your signature is your credit.
+
+**What types of charges do you handle?**
+All types including drug offenses, DUI/DWI, felonies, theft, violent crimes, sex crimes, domestic violence, white collar crimes, and probation/parole violations.
+
+**Are you available 24/7?**
+Yes, 24/7 emergency dispatch and bail bond services throughout Philadelphia and surrounding areas.
+
+**Can you help with outstanding warrants?**
+Yes, walk-throughs can be arranged so defendants are processed and released without spending unnecessary time in jail.

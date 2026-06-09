@@ -106,7 +106,7 @@ export default function Hero() {
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         className="hidden lg:flex absolute top-24 bottom-0 right-0 w-full lg:w-1/3 border-l border-white/10 bg-transparent p-12 flex-col z-20"
       >
-        <h3 className="text-2xl font-black uppercase tracking-tighter text-white mb-2">Get Help Fast</h3>
+        <h2 className="text-2xl font-black uppercase tracking-tighter text-white mb-2">Get Help Fast</h2>
         <p className="text-[10px] text-slate-400 mb-2 uppercase tracking-widest">Confidential • 24/7 Response</p>
 
         <AnimatePresence mode="wait">

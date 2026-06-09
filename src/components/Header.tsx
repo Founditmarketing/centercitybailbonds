@@ -48,7 +48,7 @@ export default function Header() {
       <div className="w-full flex items-center justify-between">
         {/* Logo */}
           <Link to="/" className="leading-none block">
-            <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tighter">CENTER CITY <span className="text-gold-500">BAILBONDS</span></h1>
+            <span className="text-2xl md:text-3xl font-black uppercase tracking-tighter">CENTER CITY <span className="text-gold-500">BAILBONDS</span></span>
             <p className="text-[10px] uppercase tracking-[0.2em] opacity-60 text-white">of Philadelphia</p>
           </Link>
 
@@ -124,7 +124,7 @@ export default function Header() {
               {/* Menu Header */}
               <div className="flex justify-between items-center mb-16">
                 <Link to="/" onClick={() => setMobileMenuOpen(false)} className="leading-none block">
-                  <h1 className="text-xl font-black uppercase tracking-tighter text-white">CENTER CITY <span className="text-gold-500">BAILBONDS</span></h1>
+                  <span className="text-xl font-black uppercase tracking-tighter text-white">CENTER CITY <span className="text-gold-500">BAILBONDS</span></span>
                 </Link>
                 <button 
                   onClick={() => setMobileMenuOpen(false)}

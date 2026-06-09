@@ -18,6 +18,7 @@ import AboutPage from './pages/AboutPage';
 import FAQPage from './pages/FAQPage';
 
 import ServicePage from './pages/ServicePage';
+import PrivacyPage from './pages/PrivacyPage';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/services/:id" element={<ServicePage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
         </Routes>
 
         <Footer />

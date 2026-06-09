@@ -34,7 +34,7 @@ export default function Footer() {
           <div className="flex flex-col">
             <div className="flex items-center space-x-3 mb-6">
               <div className="leading-none">
-                <h1 className="text-2xl font-black uppercase tracking-tighter text-white">CENTER CITY <span className="text-gold-500">BAILBONDS</span></h1>
+                <span className="text-2xl font-black uppercase tracking-tighter text-white">CENTER CITY <span className="text-gold-500">BAILBONDS</span></span>
                 <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">of Philadelphia</span>
               </div>
             </div>
@@ -94,8 +94,8 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium uppercase tracking-widest text-slate-500">
           <p>&copy; {new Date().getFullYear()} Center City Bailbonds. All Rights Reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-gold-500 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-gold-500 transition-colors">Terms of Service</a>
+            <Link to="/privacy" className="hover:text-gold-500 transition-colors">Privacy Policy</Link>
+            <Link to="/privacy" className="hover:text-gold-500 transition-colors">Terms of Service</Link>
             <a href="#" className="hover:text-gold-500 transition-colors">Forms</a>
           </div>
         </div>
