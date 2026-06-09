@@ -32,8 +32,9 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-    <!-- Preload hero video -->
+    <!-- Preload hero assets -->
     <link rel="preload" href="/handcuffsvideo.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="https://www.centercitybailbonds.com/gregsbailbondsskyline.jpeg" as="image" fetchpriority="high">
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BYHX7KK5DW"></script>
@@ -110,10 +111,26 @@
         },
         {
           "@type": "Service",
-          "name": "24/7 Bail Bond Services",
+          "name": "Drug Charge Bailbonds",
           "provider": {"@id": "https://www.centercitybailbonds.com/#business"},
           "serviceType": "Bail Bonds",
-          "description": "Fast, reliable bail bond services available 24/7 for all charges in Philadelphia, PA.",
+          "description": "24/7 bail bond services for drug possession, distribution, and intent to deliver charges in Philadelphia, PA.",
+          "areaServed": {"@type": "City", "name": "Philadelphia"}
+        },
+        {
+          "@type": "Service",
+          "name": "DUI/DWI Bailbonds",
+          "provider": {"@id": "https://www.centercitybailbonds.com/#business"},
+          "serviceType": "Bail Bonds",
+          "description": "Fast bail bond services for DUI and DWI charges with expert guidance through the legal process.",
+          "areaServed": {"@type": "City", "name": "Philadelphia"}
+        },
+        {
+          "@type": "Service",
+          "name": "Felony Bailbonds",
+          "provider": {"@id": "https://www.centercitybailbonds.com/#business"},
+          "serviceType": "Bail Bonds",
+          "description": "Expert bail bond services for felony charges with flexible payment options and high bond clearance.",
           "areaServed": {"@type": "City", "name": "Philadelphia"}
         },
         {
@@ -168,7 +185,7 @@
   <body class="bg-dark-950 text-white font-sans antialiased selection:bg-[#e66952] selection:text-black">
     <noscript>
       <header>
-        <span style="font-size: 24px; font-weight: 900; text-transform: uppercase;">CENTER CITY BAILBONDS</span>
+        <h1 style="font-size: 24px; font-weight: 900; text-transform: uppercase; margin: 0;">CENTER CITY BAILBONDS</h1>
         <p style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.6;">of Philadelphia</p>
       </header>
       <main>
