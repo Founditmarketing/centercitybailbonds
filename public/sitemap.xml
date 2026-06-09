@@ -30,6 +30,13 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://www.centercitybailbonds.com/privacy-policy.html</loc>
+    <lastmod>2026-06-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
   <!-- Service Pages -->
   <url>
     <loc>https://www.centercitybailbonds.com/services/domestic-violence</loc>

@@ -94,8 +94,8 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium uppercase tracking-widest text-slate-500">
           <p>&copy; {new Date().getFullYear()} Center City Bailbonds. All Rights Reserved.</p>
           <div className="flex gap-6">
-            <Link to="/privacy" className="hover:text-gold-500 transition-colors">Privacy Policy</Link>
-            <Link to="/privacy" className="hover:text-gold-500 transition-colors">Terms of Service</Link>
+            <a href="/privacy-policy.html" className="hover:text-gold-500 transition-colors">Privacy Policy</a>
+            <a href="/privacy-policy.html" className="hover:text-gold-500 transition-colors">Terms of Service</a>
             <a href="#" className="hover:text-gold-500 transition-colors">Forms</a>
           </div>
         </div>

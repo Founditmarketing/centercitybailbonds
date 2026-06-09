@@ -97,9 +97,9 @@ export default function OurWork() {
                       <Icon className="w-5 h-5 text-gold-500 group-hover:text-dark-950 transition-colors duration-500" />
                     </div>
                     <div className="pt-1">
-                      <h4 className="font-black uppercase tracking-widest text-white text-sm mb-1 group-hover:text-dark-950 transition-colors duration-500 leading-tight">
+                      <h3 className="font-black uppercase tracking-widest text-white text-sm mb-1 group-hover:text-dark-950 transition-colors duration-500 leading-tight">
                         {feature.name}
-                      </h4>
+                      </h3>
                       <p className="text-xs text-slate-400 group-hover:text-dark-950/70 transition-colors duration-500 leading-tight">
                         {feature.desc}
                       </p>
