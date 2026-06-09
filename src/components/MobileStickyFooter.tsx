@@ -106,7 +106,7 @@ export default function MobileStickyFooter() {
             >
               <div className="flex-shrink-0 bg-dark-950/95 backdrop-blur-sm border-b border-white/10 p-5 flex items-center justify-between z-10">
                 <div>
-                  <h3 className="text-xl font-black uppercase tracking-tighter text-white">Get Help Fast</h3>
+                  <h2 className="text-xl font-black uppercase tracking-tighter text-white">Get Help Fast</h2>
                   <p className="text-[9px] text-gold-500 uppercase tracking-widest">Confidential • 24/7 Response</p>
                 </div>
                 <button 

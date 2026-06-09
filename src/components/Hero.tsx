@@ -91,7 +91,7 @@ export default function Hero() {
             </Link>
             <a href="tel:2158708197" className="relative overflow-hidden group bg-transparent border border-white/20 text-white px-8 py-4 font-black text-sm tracking-widest uppercase transition-all w-full sm:w-auto text-center hover:border-gold-500 block">
               <div className="absolute inset-0 w-full h-full bg-gold-500 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-0"></div>
-              <span className="relative z-10 group-hover:text-black transition-colors duration-500">Call Center City Now</span>
+              <span className="relative z-10 group-hover:text-black transition-colors duration-500">Call (215) 870-8197 Now</span>
               <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-white/40 group-hover:border-black/40 z-10 transition-colors duration-500 pointer-events-none group-hover:scale-125"></div>
               <div className="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-white/40 group-hover:border-black/40 z-10 transition-colors duration-500 pointer-events-none group-hover:scale-125"></div>
             </a>
