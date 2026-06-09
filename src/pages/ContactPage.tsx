@@ -138,6 +138,26 @@ export default function ContactPage() {
                 </p>
               </div>
             </motion.div>
+
+            {/* Google Map */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="mt-4"
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.8!2d-75.1636!3d39.9441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMznCsDU2JzM4LjgiTiA3NcKwMDknNDkuMCJX!5e0!3m2!1sen!2sus!4v1234567890"
+                width="100%"
+                height="200"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="border border-white/10"
+                title="Center City Bailbonds Location - 1238 South Street, Philadelphia, PA 19147"
+              />
+            </motion.div>
           </div>
 
           {/* Contact Form */}
@@ -150,7 +170,7 @@ export default function ContactPage() {
             {/* Background Accent */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 blur-[100px] pointer-events-none rounded-full" />
             
-            <h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-8 relative z-10">Send a Secure Message</h3>
+            <h2 className="text-2xl font-black text-white uppercase tracking-tighter mb-8 relative z-10">Send a Secure Message</h2>
             
             <AnimatePresence mode="wait">
               {status === 'success' ? (

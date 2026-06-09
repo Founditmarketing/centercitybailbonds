@@ -137,7 +137,7 @@ export default function FAQPage() {
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/10 rounded-full blur-[40px] pointer-events-none" />
                   
                   <HelpCircle className="w-10 h-10 text-gold-500 mb-6" />
-                  <h3 className="text-2xl font-black uppercase tracking-tighter text-white mb-4">Still Have Questions?</h3>
+                  <h2 className="text-2xl font-black uppercase tracking-tighter text-white mb-4">Still Have Questions?</h2>
                   <p className="text-slate-400 text-sm leading-relaxed mb-8">
                     If you didn't find the answer you were looking for, or if you need immediate assistance with a bond, don't hesitate to reach out. We are available 24/7.
                   </p>

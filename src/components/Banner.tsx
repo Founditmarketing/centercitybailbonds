@@ -49,7 +49,7 @@ export default function Banner() {
                 {stat.icon}
               </div>
               <div className="flex flex-col">
-                <h3 className="text-white text-sm font-black uppercase tracking-widest whitespace-nowrap leading-tight mb-1">{stat.title}</h3>
+                <p className="text-white text-sm font-black uppercase tracking-widest whitespace-nowrap leading-tight mb-1">{stat.title}</p>
                 <p className="text-slate-400 text-[10px] uppercase tracking-widest font-bold whitespace-nowrap leading-tight">{stat.desc}</p>
               </div>
             </div>
