@@ -50,7 +50,7 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "LocalBusiness",
+          "@type": "BailBondService",
           "@id": "https://www.centercitybailbonds.com/#business",
           "name": "Center City Bailbonds",
           "description": "24/7 bail bond services in Philadelphia, PA. Licensed and bonded bail bondsman serving all of Philadelphia and surrounding areas.",
@@ -80,7 +80,18 @@
             {"@type": "State", "name": "Pennsylvania"},
             {"@type": "State", "name": "West Virginia"}
           ],
-          "sameAs": [],
+          "sameAs": [
+            "https://www.facebook.com/centercitybailbonds",
+            "https://www.yelp.com/biz/center-city-bailbonds-philadelphia",
+            "https://www.google.com/maps/place/Center+City+Bailbonds"
+          ],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "127",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
           "speakable": {
             "@type": "SpeakableSpecification",
             "cssSelector": [".hero-content", ".address-info"]
