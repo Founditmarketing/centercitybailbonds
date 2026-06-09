@@ -36,14 +36,14 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
           </motion.div>
 
           <div className="relative z-10 flex flex-col items-center">
-            <motion.h1
+            <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.2, ease: "easeOut" }}
-              className="text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tighter text-white text-center"
+              className="text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tighter text-white text-center block"
             >
               Center City's <span className="text-gold-500">Bailbonds</span>
-            </motion.h1>
+            </motion.span>
             <motion.p
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
