@@ -3,17 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
   <title>Privacy Policy - Center City Bailbonds Philadelphia</title>
-  <meta name="description" content="Privacy Policy for Center City Bailbonds. Learn how we collect, use, protect, and respect your personal information.">
+  <meta name="description" content="Privacy Policy for Center City Bailbonds Philadelphia. Learn how we collect, use, protect, and respect your personal information for bail bond services. Licensed & bonded.">
   <link rel="canonical" href="https://www.centercitybailbonds.com/privacy-policy.html">
   
-  <!-- Fonts -->
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://www.centercitybailbonds.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Privacy Policy - Center City Bailbonds Philadelphia">
+  <meta property="og:description" content="Privacy Policy for Center City Bailbonds Philadelphia. Learn how we collect, use, protect, and respect your personal information for bail bond services.">
+  <meta property="og:image" content="https://www.centercitybailbonds.com/gregsbailbondsskyline.jpeg">
+  <meta property="og:url" content="https://www.centercitybailbonds.com/privacy-policy.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Center City Bailbonds">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacy Policy - Center City Bailbonds Philadelphia">
+  <meta name="twitter:description" content="Privacy Policy for Center City Bailbonds Philadelphia. Learn how we collect, use, protect, and respect your personal information.">
+  <meta name="twitter:image" content="https://www.centercitybailbonds.com/gregsbailbondsskyline.jpeg">
+  
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -36,6 +55,59 @@
         }
       }
     }
+  </script>
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BailBondService",
+        "@id": "https://www.centercitybailbonds.com/#business",
+        "name": "Center City Bailbonds",
+        "description": "24/7 bail bond services in Philadelphia, PA. Licensed and bonded bail bondsman serving all of Philadelphia and surrounding areas.",
+        "url": "https://www.centercitybailbonds.com",
+        "telephone": "+1-215-870-8197",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "1238 South Street",
+          "addressLocality": "Philadelphia",
+          "addressRegion": "PA",
+          "postalCode": "19147",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "39.9441",
+          "longitude": "-75.1636"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "00:00",
+          "closes": "23:59"
+        },
+        "areaServed": [
+          {"@type": "City", "name": "Philadelphia"},
+          {"@type": "State", "name": "Pennsylvania"}
+        ],
+        "sameAs": [
+          "https://www.facebook.com/centercitybailbonds",
+          "https://www.yelp.com/biz/center-city-bailbonds-philadelphia",
+          "https://www.google.com/maps/place/Center+City+Bailbonds"
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.centercitybailbonds.com/privacy-policy.html#webpage",
+        "url": "https://www.centercitybailbonds.com/privacy-policy.html",
+        "name": "Privacy Policy - Center City Bailbonds Philadelphia",
+        "isPartOf": {"@id": "https://www.centercitybailbonds.com/#website"},
+        "about": {"@id": "https://www.centercitybailbonds.com/#business"}
+      }
+    ]
+  }
   </script>
 </head>
 <body class="bg-dark-950 text-white font-sans antialiased selection:bg-[#e66952] selection:text-black min-h-screen flex flex-col justify-between">
@@ -126,7 +198,13 @@
 
   <!-- Footer -->
   <footer class="w-full bg-dark-900 border-t border-gold-500/20 py-8 px-4 text-center text-xs font-medium uppercase tracking-widest text-slate-500">
-    <p>&copy; 2026 Center City Bailbonds. All Rights Reserved.</p>
+    <div class="max-w-3xl mx-auto space-y-3">
+      <p class="text-slate-400">
+        Center City Bailbonds &bull; 1238 South Street, Philadelphia, PA 19147 &bull; Phone: <a href="tel:2158708197" class="hover:text-gold-500 transition-colors">(215) 870-8197</a>
+      </p>
+      <p class="text-gold-500 font-bold">Licensed & Bonded Bail Bond Services</p>
+      <p class="text-[10px] text-slate-600">&copy; 2026 Center City Bailbonds. All Rights Reserved.</p>
+    </div>
   </footer>
 
 </body>

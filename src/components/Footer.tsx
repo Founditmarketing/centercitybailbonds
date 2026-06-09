@@ -74,7 +74,7 @@ export default function Footer() {
                   <Phone className="w-5 h-5 text-gold-500 group-hover:text-black transition-colors duration-500" />
                 </div>
                 <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2 group-hover:text-black/70 transition-colors duration-500">Emergency Bail Line</p>
-                <a href="tel:215-870-8197" className="text-white text-xl font-black group-hover:text-black transition-colors duration-500">
+                <a href="tel:2158708197" className="text-white text-xl font-black group-hover:text-black transition-colors duration-500">
                   (215) 870-8197
                 </a>
               </div>

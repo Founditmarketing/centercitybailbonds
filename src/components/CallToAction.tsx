@@ -44,7 +44,7 @@ export default function CallToAction() {
 
           <div className="mt-12 flex justify-center w-full max-w-sm">
             <a 
-              href="tel:215-870-8197" 
+              href="tel:2158708197" 
               className="relative overflow-hidden group bg-transparent border-2 border-gold-500 text-white px-10 py-5 font-black uppercase tracking-widest transition-all duration-300 text-sm text-center inline-block w-full"
             >
               <div className="absolute inset-0 w-full h-full bg-gold-500 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-0"></div>
