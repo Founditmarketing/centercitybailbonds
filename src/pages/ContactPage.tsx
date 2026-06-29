@@ -31,16 +31,14 @@ export default function ContactPage() {
     setErrorMsg('');
 
     try {
-      const res = await fetch('/api/send-email', {
+      const res = await fetch('https://www.founditos.com/api/contact-form/246b7385-9bf3-4240-92e2-fae8f63b58c0', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to send message.');
+      if (!res.ok && res.status !== 307) {
+        throw new Error('Failed to send message.');
       }
 
       setStatus('success');
