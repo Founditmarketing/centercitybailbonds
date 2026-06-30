@@ -1,3 +1,4 @@
+import PageSEO from '../components/PageSEO';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Phone, MapPin, ArrowRight, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
@@ -55,7 +56,13 @@ export default function ContactPage() {
     'absolute left-4 top-2 text-[10px] uppercase text-gold-500 font-bold tracking-widest transition-all peer-placeholder-shown:text-[11px] peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/40 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-gold-500 pointer-events-none';
 
   return (
-    <main className="relative z-10 flex flex-col min-h-screen pt-32 pb-24 px-4 bg-dark-950">
+    <>
+      <PageSEO
+        title="Contact Us | Center City Bail Bonds Philadelphia"
+        description="Call or message Center City Bail Bonds 24/7. Fast bail bond help for any charge in Philadelphia, PA."
+        canonical="https://www.centercitybailbonds.com/contact"
+      />
+      <main className="relative z-10 flex flex-col min-h-screen pt-32 pb-24 px-4 bg-dark-950">
       <div className="max-w-7xl mx-auto w-full">
         {/* Header Section */}
         <div className="text-center mb-16 md:mb-24">
@@ -303,5 +310,6 @@ export default function ContactPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }

@@ -1,3 +1,4 @@
+import PageSEO from '../components/PageSEO';
 import { motion } from 'motion/react';
 import { ShieldCheck, Clock, MapPin, Award, CheckCircle2 } from 'lucide-react';
 import CallToAction from '../components/CallToAction';
@@ -5,6 +6,11 @@ import CallToAction from '../components/CallToAction';
 export default function AboutPage() {
   return (
     <main className="relative z-10 flex flex-col min-h-screen bg-dark-950">
+      <PageSEO
+        title="About | Center City Bail Bonds Philadelphia"
+        description="Philadelphia's trusted bail bondsman for 13+ years. Fast, discreet, 24/7 bail bond service for families in need."
+        canonical="https://www.centercitybailbonds.com/about"
+      />
       <section className="relative pt-40 pb-12 md:pt-40 md:pb-16 px-4 overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <div 

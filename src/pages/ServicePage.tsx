@@ -1,3 +1,5 @@
+import PageSEO from '../components/PageSEO';
+import StructuredData from '../components/StructuredData';
 import { motion } from 'motion/react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { HelpCircle, ChevronRight, Phone, Mail, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
@@ -5,14 +7,54 @@ import CallToAction from '../components/CallToAction';
 import { servicesData } from '../data/servicesData';
 import React from 'react';
 
+const serviceSEO: Record<string, { title: string; description: string }> = {
+  'domestic-violence': {
+    title: 'Domestic Violence Bail Bonds | Center City Bail Bonds',
+    description: '24/7 domestic violence bail bonds in Philadelphia. Fast, discreet release — Center City Bail Bonds handles sensitive cases with care.',
+  },
+  'drug-charges': {
+    title: 'Drug Charges Bail Bonds | Center City Bail Bonds',
+    description: 'Arrested on drug charges in Philadelphia? Center City Bail Bonds secures fast release 24/7 for all drug-related offenses.',
+  },
+  'dui-dwi': {
+    title: 'DUI & DWI Bail Bonds | Center City Bail Bonds',
+    description: 'DUI or DWI arrest in Philadelphia? Center City Bail Bonds gets your loved one out fast — licensed, 24/7 bail bond service.',
+  },
+  'felony': {
+    title: 'Felony Bail Bonds | Center City Bail Bonds',
+    description: 'Felony arrest in Philadelphia? Center City Bail Bonds provides fast, professional bail bond service 24/7 for serious charges.',
+  },
+  'probation-parole': {
+    title: 'Probation & Parole Violation Bail Bonds | Center City',
+    description: 'Probation or parole violation in Philadelphia? Center City Bail Bonds acts fast to secure release before a hearing is set.',
+  },
+  'sex-crimes': {
+    title: 'Sex Crime Bail Bonds | Center City Bail Bonds',
+    description: 'Discreet, licensed bail bonds for sex crime arrests in Philadelphia. Center City Bail Bonds operates 24/7 with full confidentiality.',
+  },
+  'theft': {
+    title: 'Theft Charges Bail Bonds | Center City Bail Bonds',
+    description: 'Theft arrest in Philadelphia? Center City Bail Bonds provides fast, judgment-free bail bond service 24/7 for all theft charges.',
+  },
+  'violent-crimes': {
+    title: 'Violent Crime Bail Bonds | Center City Bail Bonds',
+    description: 'Violent crime arrest in Philadelphia? Center City Bail Bonds delivers fast, 24/7 bail bond service for serious felony charges.',
+  },
+  'white-collar': {
+    title: 'White Collar Crime Bail Bonds | Center City Bail Bonds',
+    description: 'Fraud or embezzlement arrest in Philadelphia? Center City Bail Bonds secures confidential, fast release for white collar charges.',
+  },
+};
+
 export default function ServicePage() {
   const { id } = useParams<{ id: string }>();
-  
+
   if (!id || !servicesData[id as keyof typeof servicesData]) {
     return <Navigate to="/" replace />;
   }
 
   const service = servicesData[id as keyof typeof servicesData];
+  const seo = serviceSEO[id] ?? { title: `${service.title} | Center City Bail Bonds`, description: service.heroText.slice(0, 155) };
 
   // Helper function to format paragraphs that contain lists
   const renderParagraph = (text: string, idx: number) => {
@@ -66,7 +108,14 @@ export default function ServicePage() {
   };
 
   return (
-    <main className="relative z-10 flex flex-col min-h-screen bg-dark-950">
+    <>
+      <PageSEO
+        title={seo.title}
+        description={seo.description}
+        canonical={`https://www.centercitybailbonds.com/services/${id}`}
+      />
+      <StructuredData page="service" serviceSlug={id} />
+      <main className="relative z-10 flex flex-col min-h-screen bg-dark-950">
       {/* Hero Section */}
       <section className="relative pt-40 pb-12 md:pt-48 md:pb-16 px-4 overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
@@ -182,5 +231,6 @@ export default function ServicePage() {
       {/* Call to Action Section */}
       <CallToAction />
     </main>
+    </>
   );
 }

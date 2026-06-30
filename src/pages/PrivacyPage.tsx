@@ -1,8 +1,16 @@
+import PageSEO from '../components/PageSEO';
 import { Link } from 'react-router-dom';
 
 export default function PrivacyPage() {
   return (
-    <section className="min-h-screen pt-32 pb-20 px-4">
+    <>
+      <PageSEO
+        title="Privacy Policy | Center City Bail Bonds"
+        description="Center City Bail Bonds privacy policy. All personal information is kept strictly confidential."
+        canonical="https://www.centercitybailbonds.com/privacy"
+        noIndex={true}
+      />
+      <section className="min-h-screen pt-32 pb-20 px-4">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-8">
           Privacy <span className="text-gold-500">Policy</span>
@@ -58,5 +66,6 @@ export default function PrivacyPage() {
         </div>
       </div>
     </section>
+    </>
   );
 }

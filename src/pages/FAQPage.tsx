@@ -1,3 +1,5 @@
+import PageSEO from '../components/PageSEO';
+import StructuredData from '../components/StructuredData';
 import { motion } from 'motion/react';
 import { HelpCircle, ChevronDown, Phone, Mail, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
@@ -55,7 +57,14 @@ export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <main className="relative z-10 flex flex-col min-h-screen bg-dark-950">
+    <>
+      <PageSEO
+        title="Bail Bond FAQ | Center City Bail Bonds Philadelphia"
+        description="How does bail work in Philadelphia? Learn about surety bonds, co-signers, cash bonds, and release times."
+        canonical="https://www.centercitybailbonds.com/faq"
+      />
+      <StructuredData page="faq" />
+      <main className="relative z-10 flex flex-col min-h-screen bg-dark-950">
       {/* Hero Section */}
       <section className="relative pt-40 pb-12 md:pt-48 md:pb-16 px-4 overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
@@ -166,5 +175,6 @@ export default function FAQPage() {
       {/* Call to Action Section */}
       <CallToAction />
     </main>
+    </>
   );
 }
