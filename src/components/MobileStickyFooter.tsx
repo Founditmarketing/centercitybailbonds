@@ -28,10 +28,15 @@ export default function MobileStickyFooter() {
     setStatus('loading');
     setErrorMsg('');
     try {
-      const res = await fetch('/api/send-email', {
+      const res = await fetch('https://www.founditos.com/api/contact-form/246b7385-9bf3-4240-92e2-fae8f63b58c0', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: `Service: ${formData.service}\n\n${formData.message}`,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to send message.');
