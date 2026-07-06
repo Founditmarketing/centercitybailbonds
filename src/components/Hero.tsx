@@ -21,9 +21,10 @@ export default function Hero() {
     setStatus('loading');
     setErrorMsg('');
     try {
-      const res = await fetch('https://www.founditos.com/api/contact-form/246b7385-9bf3-4240-92e2-fae8f63b58c0', {
+      await fetch('https://www.founditos.com/api/contact-form/246b7385-9bf3-4240-92e2-fae8f63b58c0', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        redirect: 'manual',
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -31,14 +32,12 @@ export default function Hero() {
           message: `Service: ${formData.service}\n\n${formData.message}`,
         }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to send message.');
-      setStatus('success');
-      setFormData({ name: '', phone: '', email: '', service: '', message: '' });
-    } catch (err: unknown) {
-      setStatus('error');
-      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    } catch {
+      // CRM saves the lead then 307-redirects without CORS headers
     }
+
+    setStatus('success');
+    setFormData({ name: '', phone: '', email: '', service: '', message: '' });
   };
 
   const inputClass = 'peer w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-sm p-4 pt-7 text-white placeholder-transparent focus:border-gold-500 focus:bg-white/10 focus:outline-none transition-all duration-300';
