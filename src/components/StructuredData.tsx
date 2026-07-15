@@ -24,7 +24,7 @@ const organization = {
     latitude: '39.9441',
     longitude: '-75.1636',
   },
-  hasMap: 'https://www.google.com/maps/place/Center+City+Bailbonds',
+  hasMap: 'https://www.google.com/maps?cid=241971076045184994',
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -37,8 +37,8 @@ const organization = {
   ],
   sameAs: [
     'https://www.facebook.com/centercitybailbonds',
-    'https://www.yelp.com/biz/center-city-bailbonds-philadelphia',
-    'https://www.google.com/maps/place/Center+City+Bailbonds',
+    'https://www.yelp.com/biz/center-city-bail-bonds-philadelphia',
+    'https://www.google.com/maps?cid=241971076045184994',
   ],
 };
 
