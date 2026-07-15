@@ -40,13 +40,6 @@ const organization = {
     'https://www.yelp.com/biz/center-city-bailbonds-philadelphia',
     'https://www.google.com/maps/place/Center+City+Bailbonds',
   ],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    reviewCount: '127',
-    bestRating: '5',
-    worstRating: '1',
-  },
 };
 
 const website = {
