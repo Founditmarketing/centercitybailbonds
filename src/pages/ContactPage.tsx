@@ -1,4 +1,5 @@
 import PageSEO from '../components/PageSEO';
+import StructuredData from '../components/StructuredData';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Phone, MapPin, ArrowRight, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
@@ -62,6 +63,7 @@ export default function ContactPage() {
         description="Call or message Center City Bail Bonds 24/7. Fast bail bond help for any charge in Philadelphia, PA."
         canonical="https://www.centercitybailbonds.com/contact"
       />
+      <StructuredData page="contact" />
       <main className="relative z-10 flex flex-col min-h-screen pt-32 pb-24 px-4 bg-dark-950">
       <div className="max-w-7xl mx-auto w-full">
         {/* Header Section */}

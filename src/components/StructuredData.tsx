@@ -149,6 +149,18 @@ const FAQ_PAIRS = [
 
 // ── Schema builders ────────────────────────────────────────────────────────
 
+function buildBreadcrumb(items: { name: string; path: string }[]) {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: `${BASE_URL}${item.path}`,
+    })),
+  };
+}
+
 function buildHomepageSchema() {
   return {
     '@context': 'https://schema.org',
@@ -159,8 +171,7 @@ function buildHomepageSchema() {
 function buildServiceSchema(slug: string) {
   const svc = SERVICE_SEO[slug];
   if (!svc) return null;
-  return {
-    '@context': 'https://schema.org',
+  const service = {
     '@type': 'Service',
     name: svc.name,
     description: svc.description,
@@ -169,11 +180,16 @@ function buildServiceSchema(slug: string) {
     serviceType: 'Bail Bond Service',
     areaServed: { '@type': 'City', name: 'Philadelphia' },
   };
+  const breadcrumb = buildBreadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/#services' },
+    { name: svc.name, path: `/services/${slug}` },
+  ]);
+  return { '@context': 'https://schema.org', '@graph': [service, breadcrumb] };
 }
 
 function buildFAQSchema() {
-  return {
-    '@context': 'https://schema.org',
+  const faqPage = {
     '@type': 'FAQPage',
     mainEntity: FAQ_PAIRS.map(({ q, a }) => ({
       '@type': 'Question',
@@ -181,6 +197,43 @@ function buildFAQSchema() {
       acceptedAnswer: { '@type': 'Answer', text: a },
     })),
   };
+  const breadcrumb = buildBreadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'FAQ', path: '/faq' },
+  ]);
+  return { '@context': 'https://schema.org', '@graph': [faqPage, breadcrumb] };
+}
+
+function buildAboutSchema() {
+  const aboutPage = {
+    '@type': 'AboutPage',
+    '@id': `${BASE_URL}/about#webpage`,
+    url: `${BASE_URL}/about`,
+    name: 'About Center City Bail Bonds',
+    about: { '@id': BUSINESS_ID },
+    isPartOf: { '@id': WEBSITE_ID },
+  };
+  const breadcrumb = buildBreadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+  ]);
+  return { '@context': 'https://schema.org', '@graph': [aboutPage, breadcrumb] };
+}
+
+function buildContactSchema() {
+  const contactPage = {
+    '@type': 'ContactPage',
+    '@id': `${BASE_URL}/contact#webpage`,
+    url: `${BASE_URL}/contact`,
+    name: 'Contact Center City Bail Bonds',
+    about: { '@id': BUSINESS_ID },
+    isPartOf: { '@id': WEBSITE_ID },
+  };
+  const breadcrumb = buildBreadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'Contact', path: '/contact' },
+  ]);
+  return { '@context': 'https://schema.org', '@graph': [contactPage, breadcrumb] };
 }
 
 // ── Component ──────────────────────────────────────────────────────────────
@@ -196,6 +249,8 @@ export default function StructuredData({ page, serviceSlug }: StructuredDataProp
   if (page === 'homepage') schema = buildHomepageSchema();
   else if (page === 'service' && serviceSlug) schema = buildServiceSchema(serviceSlug);
   else if (page === 'faq') schema = buildFAQSchema();
+  else if (page === 'about') schema = buildAboutSchema();
+  else if (page === 'contact') schema = buildContactSchema();
 
   if (!schema) return null;
 
