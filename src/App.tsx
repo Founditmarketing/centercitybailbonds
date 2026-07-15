@@ -5,6 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import BackgroundPattern from './components/BackgroundPattern';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -53,6 +54,7 @@ export default function App() {
         <Footer />
         <MobileStickyFooter />
       </div>
+      <Analytics />
     </>
   );
 }
